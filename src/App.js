@@ -275,7 +275,8 @@ class App extends React.Component {
                              user={this.state.user}/>)
         :(this.state.route==='post'
             ?<PostReview  onRouteChange={this.onRouteChange}
-                          user={this.state.user}/>
+                          user={this.state.user}
+                          onSetHomeCards={this.onSetHomeCards}/>
             :(this.state.route==='cardView'
               ?<CardView card={this.state.card}/>
               :<Home homeCards={this.state.homeCards}

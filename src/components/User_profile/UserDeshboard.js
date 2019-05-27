@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../Home/Card';
+import Card from './UserCard';
 import { request } from 'graphql-request';
 
 
@@ -18,7 +18,9 @@ class UserDeshboard extends React.Component {
                        }
                       ){
                         imageUrl
-                      
+                      views
+                      tag
+                      likes
                        title
                       description
                        author

@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Card = ({cards,onView,onLike}) => {
+const UserCard = ({cards}) => {
 console.log(cards!==undefined);
 if(cards!==undefined)
 {
@@ -10,15 +10,14 @@ const result =  Object.values(cards);
 
 
   const card = result.map((card)=>{
-    if(card.tag==="accepted")
     return <div >
     <div class="ui centered cards">
   <div class="card">
-    <div onClick={()=>onView(card)}  class="image">
+    <div   class="image">
       <img src={card.imageUrl}/>
 
     </div>
-    <div onClick={()=>onView(card)}  class="content">
+    <div   class="content">
       <div class="header">{card.title}</div>
      
       <div class="description">
@@ -27,7 +26,7 @@ const result =  Object.values(cards);
     </div>
      <div class="content">
     <span  class="center floated">
-      <i onClick={()=>onLike(card)} class="heart outline like icon"></i>
+      <i class="heart outline like icon"></i>
       {card.likes}
     </span>
     <span class="left floated">
@@ -54,4 +53,4 @@ const result =  Object.values(cards);
   }
 }
 
-export default Card;
+export default UserCard;

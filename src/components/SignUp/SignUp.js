@@ -54,7 +54,8 @@ class SignUp extends React.Component{
       "password":this.state.password,
       "admin":"false"}
       )
-    .then(response=> {console.log(response.createUser40384)
+    .then(response=> {console.log(response.createUser40384);
+      this.props.onLoadUser(response.createUser40384);
       this.props.onRouteChange('signedIn');
     }).catch(error=>{
       console.log(error);

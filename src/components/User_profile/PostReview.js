@@ -43,6 +43,10 @@ class PostReview extends React.Component{
             views: 0,
             likes: 0
              }) {
+                 views
+                 tag
+                 likes
+                 author
                  imageUrl
                  title
                  description
@@ -56,7 +60,8 @@ class PostReview extends React.Component{
       "author": this.props.user.name
       }
       )
-    .then(response=> {console.log(response.createUser40384)
+    .then(response=> {console.log(response.createUser40384);
+      
       this.props.onRouteChange('signedIn');
     }).catch(error=>{
       console.log(error);
