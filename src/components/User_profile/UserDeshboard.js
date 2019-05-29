@@ -31,8 +31,22 @@ class UserDeshboard extends React.Component {
     })
     .then(response=> {
     console.log({response});
-    
      this.props.onSetUserCards(response.posts);
+    const query=`query {
+                   posts{
+                    author
+                    likes
+                    views
+                    tag
+                    imageUrl
+                    title
+                    description
+                    }
+                   }`
+    const {post,userkhan40384} = request('https://api-apeast.graphcms.com/v1/cjw53w6232fdu01ettnu7ogbp/master',query)
+    .then(response=>{
+      this.props.onSetHomeCards(response.posts);
+    }).catch(error=> console.log(error))
       
     }).catch(error=>{
       console.log(error.message);

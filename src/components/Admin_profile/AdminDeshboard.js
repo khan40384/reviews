@@ -4,7 +4,7 @@ import PendingCard from './PendingCard';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 
-const AdminDeshboard = ({onRouteChange,onSignOut,homeCards,onChangeTag}) => {
+const AdminDeshboard = ({onRouteChange,onSignOut,homeCards,onChangeTag,onRejected}) => {
 	return (
          <Tabs>
     <TabList style={{marginTop:'20px'}}>
@@ -23,7 +23,7 @@ const AdminDeshboard = ({onRouteChange,onSignOut,homeCards,onChangeTag}) => {
     
      <TabPanel style={{minHeight:'800px', margin: '30px'}}>
      <a onClick={()=>onRouteChange('home')} style={{marginTop:'20px'}} className="ui segment right floated large inverted button">Sign Out</a>
-     <PendingCard onChangeTag={onChangeTag} homeCards={homeCards}/>
+     <PendingCard onChangeTag={onChangeTag} onRejected={onRejected} homeCards={homeCards}/>
      </TabPanel>
      </Tabs>
 

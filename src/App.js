@@ -38,19 +38,36 @@ class App extends React.Component {
   }
 
   onSetCard=(card)=>{
-    this.setState({card:{
-      likes: card.likes,
-      title: card.title,
-      description: card.description,
-      author: card.author,
-      imageUrl: card.imageUrl,
-      tag: card.tag,
-      views: card.views
+      const query=`query ($title: String!){
+                   post(
+                    where: {title: $title}){
+                    likes
+                    views
+                    author
+                    tag
+                    imageUrl
+                    title
+                    description
+                    }
+                   }`
+    const {post,userkhan40384} = request('https://api-apeast.graphcms.com/v1/cjw53w6232fdu01ettnu7ogbp/master',query,
+      {"title": card.title})
+    .then(response=>{
+       this.setState({card:{
+      likes: response.post.likes,
+      title: response.post.title,
+      description: response.post.description,
+      author: response.post.author,
+      imageUrl: response.post.imageUrl,
+      tag: response.post.tag,
+      views: response.post.views
     }})
+    })
+   
   }
 
   onView=(card)=>{
-    this.onSetCard(card);
+    
      const query=`mutation ($title: String!, $views: Int!) {
                   updatePost(
                      data: {views: $views},
@@ -69,7 +86,7 @@ class App extends React.Component {
       "views": card.views+1
     }).then(response=>{
       console.log(response);
-
+        this.onSetCard(card);
        const query=`query {
                    posts{
                     likes
@@ -85,7 +102,8 @@ class App extends React.Component {
     .then(response=> {
       console.log(response.posts);
      this.onSetHomeCards(response.posts);
-      console.log(this.state.homeCards)
+      console.log(this.state.homeCards);
+      
     }).catch(error=>{
       console.log(error);
     });
@@ -139,7 +157,7 @@ class App extends React.Component {
     });
     
       console.log(this.state.homeCards);
-    this.onRouteChange('cardView');
+   
     }).catch(error=>{
       console.log(error);
     });
@@ -188,6 +206,49 @@ class App extends React.Component {
       console.log(error)
     })
   }
+
+  onRejected=(title)=>{
+    const query = `mutation ($title: String!){
+                   deletePost(where: {
+                             title:$title
+                                  }) {
+                                       author
+                                       likes
+                                       views
+                                      tag
+                                      imageUrl
+                                      title
+                                       description
+                                      }
+                       }`
+     const {post,userkhan40384} = request('https://api-apeast.graphcms.com/v1/cjw53w6232fdu01ettnu7ogbp/master',query,{
+      "title": title
+    }).then(response=>{
+      console.log(response);
+       const query=`query {
+                   posts{
+                    author
+                    likes
+                    views
+                    tag
+                    imageUrl
+                    title
+                    description
+                    }
+                   }`
+    const {post,userkhan40384} = request('https://api-apeast.graphcms.com/v1/cjw53w6232fdu01ettnu7ogbp/master',query)
+    .then(response=> {
+
+     this.onSetHomeCards(response.posts);
+      console.log(this.state.homeCards)
+    }).catch(error=>{
+      console.log(error);
+    });
+
+    }).catch(error=>{
+      console.log(error)
+    })
+         }
 
   onLoadUser=(user)=>{
     this.setState({user:{
@@ -266,19 +327,22 @@ class App extends React.Component {
           ?<AdminDeshboard  onRouteChange={this.onRouteChange}
                             onSignOut={this.onSignOut}
                             homeCards={this.state.homeCards}
-                            onChangeTag={this.onChangeTag}/>
+                            onChangeTag={this.onChangeTag}
+                            onRejected={this.onRejected}/>
           
             :<UserDeshboard  onRouteChange={this.onRouteChange}
                              onSignOut={this.onSignOut}
                              onSetUserCards={this.onSetUserCards}
                              userCards={this.state.userCards}
-                             user={this.state.user}/>)
+                             user={this.state.user}
+                             onSetHomeCards={this.onSetHomeCards}/>)
         :(this.state.route==='post'
             ?<PostReview  onRouteChange={this.onRouteChange}
                           user={this.state.user}
                           onSetHomeCards={this.onSetHomeCards}/>
             :(this.state.route==='cardView'
-              ?<CardView card={this.state.card}/>
+              ?<CardView card={this.state.card}
+                         onLike={this.onLike}/>
               :<Home homeCards={this.state.homeCards}
                    onView={this.onView}
                    onLike={this.onLike}/>))))}

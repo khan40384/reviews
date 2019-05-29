@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Card = ({card}) => {
+const Card = ({card,onLike}) => {
     return(<div style={{marginTop: '40px'}}>
     <div class="ui centered cards">
   <div class="card">
@@ -18,7 +18,7 @@ const Card = ({card}) => {
     </div>
      <div class="content">
     <span class="center floated">
-      <i class="heart outline like icon"></i>
+      <i onClick={()=>onLike(card)} class="heart outline like icon"></i>
       {card.likes}
     </span>
     <span class="left floated">

@@ -27,15 +27,15 @@ const result =  Object.values(homeCards);
      <div class="content">
     <span class="center floated">
       <i class="heart outline like icon"></i>
-      17 likes
+      {card.like}
     </span>
     <span class="left floated">
     <i class="eye icon"></i>
-    3 view
+    {card.views}
     </span>
     <span class="right floated">
     <i class="user icon"></i>
-    Salman
+    {card.author}
     </span>
   </div>
   </div>

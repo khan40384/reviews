@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const PendingCard = ({homeCards,onChangeTag}) => {
+const PendingCard = ({homeCards,onChangeTag,onRejected}) => {
 console.log(homeCards!==undefined);
 if(homeCards!==undefined||homeCards.length!==0)
 {
@@ -28,21 +28,21 @@ const result =  Object.values(homeCards);
      <div class="content">
     <span class="center floated">
       <i class="heart outline like icon"></i>
-      17 likes
+      {card.likes}
     </span>
     <span class="left floated">
     <i class="eye icon"></i>
-    3 view
+    {card.views}
     </span>
     <span class="right floated">
     <i class="user icon"></i>
-    Salman
+    {card.author}
     </span>
   </div>
    <div class="extra content">
       <div class="ui two buttons">
         <div onClick={()=>onChangeTag(card.title)} class="ui basic green button">Approve</div>
-        <div class="ui basic red button">Decline</div>
+        <div onClick={()=>onRejected(card.title)} class="ui basic red button">Decline</div>
       </div>
     </div>
   </div>
